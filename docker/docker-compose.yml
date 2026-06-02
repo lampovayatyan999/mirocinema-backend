@@ -1,0 +1,175 @@
+version: '3.9'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - mirocinema
+
+  mongo:
+      container_name: mongo
+      image: mongo:6
+      restart: always
+      environment:
+          MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+          MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      ports:
+          - 27018:27017
+      volumes:
+          - mongo_data:/data/db
+      networks:
+          - mirocinema
+
+  redis:
+    container_name: redis
+    image: redis:6.2
+    restart: always
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - mirocinema
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASSWORD: password123
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - mirocinema
+
+  postgres-exporter:
+    container_name: postgres-exporter
+    image: prometheuscommunity/postgres-exporter
+    restart: always
+    environment:
+      - DATA_SOURCE_NAME=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/postgres?sslmode=disable
+    ports:
+      - 9187:9187
+    networks:
+      - mirocinema
+    depends_on:
+      - postgres
+    
+  redis-exporter:
+    container_name: redis-exporter
+    image: oliver006/redis_exporter
+    restart: always
+    command: -redis.addr=redis://:${REDIS_PASSWORD}@redis:6379
+    ports: 
+      - 9121:9121
+    networks:
+      - mirocinema
+    depends_on:
+      - redis
+
+  rabbitmq-exporter:
+    container_name: rabbitmq-exporter
+    image: kbudde/rabbitmq-exporter
+    restart: always
+    environment:
+      RABBIT_URL: http://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASSWORD}@rabbitmq:15672 
+    ports: 
+      - 9419:9419
+    networks:
+      - mirocinema
+    depends_on:
+      - rabbitmq
+
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter
+    restart: always
+    ports: 
+      - 9100:9100
+    networks:
+      - mirocinema
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports: 
+      - 9090:9090
+    networks:
+      - mirocinema
+
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:1.47
+    restart: unless-stopped
+    ports:
+      - 16686:16686
+      - 4317:4317
+      - 4318:4318
+    networks:
+      - mirocinema
+
+  loki:
+    image: grafana/loki:2.9.1
+    container_name: loki
+    restart: unless-stopped
+    volumes:
+      - ./loki-config.yml:/etc/loki/config.yaml
+      - ./loki-data:/loki
+      - ./loki-wal:/wal
+    command: -config.file=/etc/loki/config.yaml
+    ports:
+      - '3100:3100'
+    networks:
+      - mirocinema
+
+  promtail:
+    image: grafana/promtail:2.9.1
+    container_name: promtail
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - ../logs:/var/log/services
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - mirocinema    
+  
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:10.2.3
+    restart: unless-stopped
+    ports:
+      - '3002:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - mirocinema
+
+volumes:
+  postgres_data:
+  mongo_data:  
+  redis_data:
+  rabbitmq_data:
+  grafana-storage:
+
+networks:
+  mirocinema:
+    external: true

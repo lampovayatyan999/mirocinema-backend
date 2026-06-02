@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package theater.v1;
+
+import "google/protobuf/empty.proto";
+
+service TheaterService {
+  rpc ListTheaters (google.protobuf.Empty) returns (ListTheatersResponse);
+  rpc GetTheater (GetTheaterRequest) returns (GetTheaterResponse);
+
+  rpc CreateTheater (CreateTheaterRequest) returns (CreateTheaterResponse);
+}
+
+message ListTheatersResponse {
+    repeated Theater theaters = 1;
+}
+
+message GetTheaterRequest {
+    string id = 1;
+}
+
+message GetTheaterResponse {
+    Theater theater = 1;
+}
+
+message CreateTheaterRequest {
+    string name = 1;
+    string address = 2;
+}
+
+message CreateTheaterResponse {
+    bool ok = 1;
+}
+
+message Theater {
+    string id = 1;
+    string name = 2;
+    string address = 3;
+}

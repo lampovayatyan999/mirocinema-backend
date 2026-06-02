@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Payment {
+  id String @id @default(nanoid())
+
+  amount Float 
+  status PaymentStatus @default(PENDING)
+
+  providerId String? @map("provider_id")
+  metadata Json? 
+
+  userId String @map("user_id")
+  bookingId String @map("booking_id")
+   
+  refunds Refund[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  @@map("payments")
+}
+
+model PaymentMethod {
+  id String @id @default(nanoid())
+
+  type String
+  status PaymentMethodStatus @default(PENDING)
+
+  bank String?
+  brand String?
+
+  first6 String?
+  last4 String?
+
+  providerId String? @map("provider_id")
+
+  userId String @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  @@map("payment_methods")
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCESS
+  FAILED
+  REFUNDED
+
+  @@map("payment_statuses")
+}
+
+model Refund {
+  id String @id @default(nanoid())
+
+  amount Float
+  status RefundStatus @default(PENDING)
+
+  providerId String? @map("provider_id")
+
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  paymentId String @map("payment_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  @@map("refunds")
+}
+
+enum PaymentMethodStatus {
+  PENDING
+  ACTIVE
+
+  @@map("payment_method_statuses")
+}
+
+enum RefundStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  
+  @@map("refund_statuses")
+}

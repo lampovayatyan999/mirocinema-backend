@@ -1,0 +1,23 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RpcStatus = void 0;
+var RpcStatus;
+(function (RpcStatus) {
+    RpcStatus[RpcStatus["OK"] = 0] = "OK";
+    RpcStatus[RpcStatus["CANCELLED"] = 1] = "CANCELLED";
+    RpcStatus[RpcStatus["UNKNOWN"] = 2] = "UNKNOWN";
+    RpcStatus[RpcStatus["INVALID_ARGUMENT"] = 3] = "INVALID_ARGUMENT";
+    RpcStatus[RpcStatus["DEADLINE_EXCEEDED"] = 4] = "DEADLINE_EXCEEDED";
+    RpcStatus[RpcStatus["NOT_FOUND"] = 5] = "NOT_FOUND";
+    RpcStatus[RpcStatus["ALREADY_EXISTS"] = 6] = "ALREADY_EXISTS";
+    RpcStatus[RpcStatus["PERMISSION_DENIED"] = 7] = "PERMISSION_DENIED";
+    RpcStatus[RpcStatus["RESOURCE_EXHAUSTED"] = 8] = "RESOURCE_EXHAUSTED";
+    RpcStatus[RpcStatus["FAILED_PRECONDITION"] = 9] = "FAILED_PRECONDITION";
+    RpcStatus[RpcStatus["ABORTED"] = 10] = "ABORTED";
+    RpcStatus[RpcStatus["OUT_OF_RANGE"] = 11] = "OUT_OF_RANGE";
+    RpcStatus[RpcStatus["UNIMPLEMENTED"] = 12] = "UNIMPLEMENTED";
+    RpcStatus[RpcStatus["INTERNAL"] = 13] = "INTERNAL";
+    RpcStatus[RpcStatus["UNAVAILABLE"] = 14] = "UNAVAILABLE";
+    RpcStatus[RpcStatus["DATA_LOSS"] = 15] = "DATA_LOSS";
+    RpcStatus[RpcStatus["UNAUTHENTICATED"] = 16] = "UNAUTHENTICATED";
+})(RpcStatus || (exports.RpcStatus = RpcStatus = {}));

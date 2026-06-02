@@ -1,0 +1,31 @@
+{
+  "name": "@mirocinema/common",
+  "version": "1.2.2",
+  "description": "Core shared components for MiroCinema microservice ecosystem",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@mirocinema/core": "^1.0.4",
+    "@types/node": "^25.6.0",
+    "prettier": "^3.8.3",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@mirocinema/contracts": "^1.5.3",
+    "@nestjs/common": "^11.1.22",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/microservices": "^11.1.22"
+  }
+}

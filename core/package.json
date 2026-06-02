@@ -1,0 +1,21 @@
+{
+  "name": "@mirocinema/core",
+  "version": "1.0.4",
+  "description": "Core utilities and shared setup",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "ISC",
+  "keywords": [],
+  "author": "lampovayatyan999",
+  "peerDependencies": {
+    "prettier": "^3.8.3"
+  },
+  "dependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2"
+  },
+  "exports": {
+    "./prettier": "./src/prettier.config.mjs"
+  }
+}

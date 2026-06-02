@@ -1,0 +1,36 @@
+name: Publish NPM Package
+on:
+    push:
+      branches:
+        - main
+    workflow_dispatch:
+jobs:
+  publish:
+    name: Publish Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: 20
+            registry-url: 'https://registry.npmjs.org'
+
+      - name: Install protoc
+        run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
+
+      - name: Install deps
+        run: yarn install --frozen-lockfile
+
+      - name: Generate TS Protobuf
+        run: mkdir -p src/gen && protoc -I ./proto ./proto/*.proto --ts_proto_out=./src/gen --ts_proto_opt=nestJs=true,package=omit --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto
+
+      - name: Build
+        run: yarn run build
+
+      - name: Publish package 
+        run: npm publish
+        env: 
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

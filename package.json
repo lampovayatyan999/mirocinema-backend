@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.4",
+    "@grpc/proto-loader": "^0.8.1",
+    "@mirocinema/common": "^1.1.8",
+    "@mirocinema/contracts": "^1.4.1",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/microservices": "^11.1.24"
+  }
+}

@@ -1,0 +1,2 @@
+CREATE DATABASE mirocinema_record_auth;
+CREATE DATABASE mirocinema_record_users;

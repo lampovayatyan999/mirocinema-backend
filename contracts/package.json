@@ -1,0 +1,50 @@
+{
+  "name": "@mirocinema/contracts",
+  "version": "1.5.3",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@nestjs/microservices": "^11.1.19",
+    "case-anything": "^2.1.13",
+    "detect-libc": "^1.0.3",
+    "dprint-node": "^1.0.8",
+    "rxjs": "^7.8.2",
+    "ts-poet": "^6.12.0",
+    "ts-proto-descriptors": "^2.1.0"
+  },
+  "devDependencies": {
+    "@grpc/grpc-js": "^1.9.0",
+    "@types/node": "^25.6.0",
+    "ts-proto": "^2.11.8",
+    "typescript": "^6.0.3"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "generate": "node -e \"require('fs').mkdirSync('src/gen', {recursive:true})\" && protoc -I ./proto ./proto/*.proto --ts_proto_out=./src/gen --ts_proto_opt=nestJs=true,package=omit --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "proto",
+    "gen"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./gen/ts/*": {
+      "require": "./dist/gen/*.js",
+      "import": "./dist/gen/*.js",
+      "types": "./dist/gen/*.d.ts"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Protobuf definitions and generated TypeScript types"
+}

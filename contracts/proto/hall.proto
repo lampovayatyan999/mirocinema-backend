@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package hall.v1;
+
+service HallService {
+  rpc CreateHall (CreateHallRequest) returns (CreateHallResponse);
+  
+  rpc GetHall (GetHallRequest) returns (GetHallResponse);
+  rpc ListHallsByTheater (ListHallsRequest) returns (ListHallsResponse);
+}
+
+message CreateHallRequest {
+    string name = 1;
+    string theater_id = 2;
+    repeated RowLayout layout = 3;
+}
+
+message CreateHallResponse {
+    Hall hall = 1;
+}
+
+message ListHallsRequest {
+    string theater_id = 1;
+}
+
+message ListHallsResponse {
+    repeated Hall halls = 1;
+}
+
+message GetHallRequest {
+    string id = 1;
+}
+
+message GetHallResponse {
+    Hall hall = 1;
+}
+
+message Hall {
+    string id = 1;
+    string name = 2;
+    string theater_id = 3;
+}
+
+message RowLayout {
+    int32 row = 1;
+    int32 columns = 2;
+    string type = 3;
+    int32 price = 4;
+}

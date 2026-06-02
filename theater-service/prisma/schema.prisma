@@ -1,0 +1,62 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Theater {
+  id String @id @default(nanoid())
+
+  name String 
+  address String
+
+  halls Hall[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+
+  @@map("theaters")
+}
+
+model Hall {
+  id String @id @default(nanoid())
+
+  name String
+
+  seats Seat[]
+
+  theater Theater @relation(fields: [theaterId], references: [id], onDelete: Cascade)
+  theaterId String @map("theater_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("halls")
+}
+
+model Seat {
+  id String @id @default(nanoid())
+
+  row Int
+  number Int
+  x Int
+  y Int
+  type String
+  price Int
+
+  hall Hall @relation(fields: [hallId], references: [id], onDelete: Cascade)
+  hallId String @map("hall_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+
+  @@unique([hallId, row, number])
+  @@map("seats")
+}
