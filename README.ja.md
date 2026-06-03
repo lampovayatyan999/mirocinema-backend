@@ -1,3 +1,11 @@
+<div align="center">
+  
+### 🌍 Выбрать язык / Choose Language / 言語を選択
+[![Russian](https://img.shields.io/badge/Русский-RU-blue?style=for-the-badge)](./README.md)
+[![English](https://img.shields.io/badge/English-EN-green?style=for-the-badge)](./README.en.md)
+[![Japanese](https://img.shields.io/badge/日本語-JA-red?style=for-the-badge)](./README.ja.md)
+
+</div>
 # MiroCinema Backend
 
 映画館管理、チケット予約、映画管理、支払い、通知機能を備えた完全機能のマイクロサービスアーキテクチャ。
