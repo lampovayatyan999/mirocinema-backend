@@ -1,3 +1,11 @@
+<div align="center">
+  
+### 🌍 Выбрать язык / Choose Language / 言語を選択
+[![Russian](https://img.shields.io/badge/Русский-RU-blue?style=for-the-badge)](./README.md)
+[![English](https://img.shields.io/badge/English-EN-green?style=for-the-badge)](./README.en.md)
+[![Japanese](https://img.shields.io/badge/日本語-JA-red?style=for-the-badge)](./README.ja.md)
+
+</div>
 # MiroCinema Backend
 
 Full-featured microservices architecture for cinema management with ticket booking, movie management, payments and notifications.
