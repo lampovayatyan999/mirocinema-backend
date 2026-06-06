@@ -12,7 +12,7 @@ export class GetMeResponse {
   public name!: string;
 
   @ApiProperty({
-    example: 'anton.chigurh@teacinema.ru'
+    example: 'anton.chigurh@mirocinema.ru'
   })
   public email!: string;
 
@@ -22,7 +22,7 @@ export class GetMeResponse {
   public phone!: string;
 
   @ApiPropertyOptional({
-    example: 'https://cdn.teacinema.ru/users/e0db4163fc2aab147599c750906396d3'
+    example: 'https://cdn.mirocinema.ru/users/e0db4163fc2aab147599c750906396d3'
   })
   public avatar!: string;
 }

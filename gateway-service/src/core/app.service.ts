@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common'
 @Injectable()
 export class AppService {
 	public getHello() {
-		return {message: 'Welcome to TeaCinema API'}
+		return {message: 'Welcome to MiroCinema API'}
 	}
 
 	public healt() {
