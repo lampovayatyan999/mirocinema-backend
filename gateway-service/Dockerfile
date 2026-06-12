@@ -4,6 +4,7 @@ COPY package.json yarn.lock ./
 RUN npm install -g @nestjs/cli
 RUN yarn install --production=false
 COPY . .
+WORKDIR /app/gateway-service
 RUN nest build
 
 FROM node:22.19.0 AS runner
@@ -11,5 +12,5 @@ WORKDIR /app
 ENV NODE_ENV=production
 COPY package.json yarn.lock ./
 RUN yarn install --production=true
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/gateway-service/dist ./dist
 CMD ["node", "dist/main"]
