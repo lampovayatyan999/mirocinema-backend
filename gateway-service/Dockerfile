@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --production=false
 COPY . .
-RUN yarn build
+RUN ./node_modules/.bin/nest build
 
 FROM node:22.19.0 AS runner
 WORKDIR /app
