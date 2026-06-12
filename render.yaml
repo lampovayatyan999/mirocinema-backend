@@ -30,65 +30,65 @@ services:
       - key: AUTH_GRPC_URL
         fromService:
           name: auth-service
-          type: pserv
+          type: web
           property: hostport
       - key: USERS_GRPC_URL
         fromService:
           name: users-service
-          type: pserv
+          type: web
           property: hostport
       - key: MOVIE_GRPC_URL
         fromService:
           name: movie-service
-          type: pserv
+          type: web
           property: hostport
       - key: THEATER_GRPC_URL
         fromService:
           name: theater-service
-          type: pserv
+          type: web
           property: hostport
       - key: PAYMENT_GRPC_URL
         fromService:
           name: payment-service
-          type: pserv
+          type: web
           property: hostport
       - key: BOOKING_GRPC_URL
         fromService:
           name: booking-service
-          type: pserv
+          type: web
           property: hostport
       - key: MEDIA_GRPC_URL
         fromService:
           name: media-service
-          type: pserv
+          type: web
           property: hostport
       - key: CATEGORY_GRPC_URL
         fromService:
           name: movie-service
-          type: pserv
+          type: web
           property: hostport
       - key: HALL_GRPC_URL
         fromService:
           name: theater-service
-          type: pserv
+          type: web
           property: hostport
       - key: SCREENING_GRPC_URL
         fromService:
           name: screening-service
-          type: pserv
+          type: web
           property: hostport
       - key: REFUND_GRPC_URL
         fromService:
           name: payment-service
-          type: pserv
+          type: web
           property: hostport
       - key: NOTIFICATION_GRPC_URL
         fromService:
           name: notification-service
-          type: pserv
+          type: web
           property: hostport
 
-  - type: pserv
+  - type: web
     name: auth-service
     runtime: docker
     plan: free
@@ -116,7 +116,7 @@ services:
       - key: JWT_EXPIRATION
         value: 3600
 
-  - type: pserv
+  - type: web
     name: users-service
     runtime: docker
     plan: free
@@ -134,7 +134,7 @@ services:
           name: mirocinema-postgres
           property: connectionString
 
-  - type: pserv
+  - type: web
     name: movie-service
     runtime: docker
     plan: free
@@ -152,7 +152,7 @@ services:
           name: mirocinema-postgres
           property: connectionString
 
-  - type: pserv
+  - type: web
     name: theater-service
     runtime: docker
     plan: free
@@ -170,7 +170,7 @@ services:
           name: mirocinema-postgres
           property: connectionString
 
-  - type: pserv
+  - type: web
     name: screening-service
     runtime: docker
     plan: free
@@ -188,7 +188,7 @@ services:
           name: mirocinema-postgres
           property: connectionString
 
-  - type: pserv
+  - type: web
     name: booking-service
     runtime: docker
     plan: free
@@ -206,7 +206,7 @@ services:
           name: mirocinema-postgres
           property: connectionString
 
-  - type: pserv
+  - type: web
     name: payment-service
     runtime: docker
     plan: free
@@ -226,7 +226,7 @@ services:
       - key: STRIPE_SECRET_KEY
         value: sk_test_xxx
 
-  - type: pserv
+  - type: web
     name: media-service
     runtime: docker
     plan: free
@@ -240,7 +240,7 @@ services:
       - key: GRPC_PORT
         value: 50053
 
-  - type: pserv
+  - type: web
     name: notification-service
     runtime: docker
     plan: free
