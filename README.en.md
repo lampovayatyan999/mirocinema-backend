@@ -6,31 +6,30 @@
 [![Japanese](https://img.shields.io/badge/日本語-JA-red?style=for-the-badge)](./README.ja.md)
 
 </div>
-
 # MiroCinema Backend
 
-Полнофункциональная микросервисная архитектура для управления кинотеатром с бронированием билетов, управлением фильмами, платежами и уведомлениями.
+Full-featured microservices architecture for cinema management with ticket booking, movie management, payments and notifications.
 
-## 📋 Содержание
+## 📋 Table of Contents
 
-- [Архитектура](#архитектура)
-- [Технологический стек](#технологический-стек)
-- [Микросервисы](#микросервисы)
-- [Предварительные требования](#предварительные-требования)
-- [Установка и запуск](#установка-и-запуск)
-- [Структура проекта](#структура-проекта)
-- [Конфигурация окружения](#конфигурация-окружения)
-- [API Документация](#api-документация)
-- [Разработка](#разработка)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Microservices](#microservices)
+- [Prerequisites](#prerequisites)
+- [Installation and Setup](#installation-and-setup)
+- [Project Structure](#project-structure)
+- [Environment Configuration](#environment-configuration)
+- [API Documentation](#api-documentation)
+- [Development](#development)
 - [Contributing](#contributing)
 
 ---
 
-## 🏗️ Архитектура
+## 🏗️ Architecture
 
-### Обзор системы
+### System Overview
 
-MiroCinema использует **микросервисную архитектуру** с следующими компонентами:
+MiroCinema uses a **microservices architecture** with the following components:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -47,7 +46,7 @@ MiroCinema использует **микросервисную архитект�
 ┌─────────┐ ┌─────────┐ ┌────────────┐   ┌────────────┐
 │  Auth   │ │ Payment │ │ Screening  │   │ Notification
 │ Service │ │ Service │ │  Service   │   │  Service
-│  (50051)│ │ (50057) │ │  (50056)   │   │ (RabbitMQ)
+│  (50051)│ │ (50059) │ │  (50057)   │   │ (RabbitMQ)
 └────┬────┘ └────┬────┘ └─────┬──────┘   └────────────┘
      │           │            │
      │        Stripe      MongoDB
@@ -65,162 +64,162 @@ MiroCinema использует **микросервисную архитект�
 
 ---
 
-## 🛠️ Технологический стек
+## 🛠️ Technology Stack
 
 - **NestJS 11** - Node.js framework
-- **TypeScript** - Язык программирования
-- **gRPC** - Микросервисная коммуникация
-- **PostgreSQL** - Реляционная БД
-- **MongoDB** - NoSQL БД
+- **TypeScript** - Programming language
+- **gRPC** - Microservices communication
+- **PostgreSQL** - Relational database
+- **MongoDB** - NoSQL database
 - **RabbitMQ** - Message broker
-- **Stripe** - Платежи
-- **JWT** - Аутентификация
-- **Prometheus** - Метрики
-- **Loki** - Логирование
-- **Jaeger** - Трассировка
-- **Docker & Docker Compose** - Контейнеризация
+- **Stripe** - Payment processing
+- **JWT** - Authentication
+- **Prometheus** - Metrics
+- **Loki** - Logging
+- **Jaeger** - Distributed tracing
+- **Docker & Docker Compose** - Containerization
 
 ---
 
-## 🎯 Микросервисы
+## 🎯 Microservices
 
-| Сервис | Порт | Тип | Назначение |
-|--------|------|-----|-----------|
+| Service | Port | Type | Purpose |
+|---------|------|------|---------|
 | Gateway | 4000 | HTTP | API Gateway |
-| Auth | 50051 | gRPC | Аутентификация |
-| Users | 50052 | gRPC | Профили пользователей |
-| Media | 50053 | gRPC | Управление медиа |
-| Movie | 50054 | gRPC | Фильмы и категории |
-| Theater | 50055 | gRPC | Кинотеатры и залы |
-| Hall | 50056 | gRPC | Кинозалы |
-| Screening | 50057 | gRPC | Расписание сеансов |
-| Booking | 50058 | gRPC | Бронирование билетов |
-| Payment | 50059 | gRPC | Платежи |
-| Notification | RabbitMQ | Event | Уведомления |
+| Auth | 50051 | gRPC | Authentication |
+| Users | 50052 | gRPC | User profiles |
+| Media | 50053 | gRPC | Media management |
+| Movie | 50054 | gRPC | Movies and categories |
+| Theater | 50055 | gRPC | Theaters and halls |
+| Hall | 50056 | gRPC | Cinema halls |
+| Screening | 50057 | gRPC | Screening schedule |
+| Booking | 50058 | gRPC | Ticket booking |
+| Payment | 50059 | gRPC | Payments |
+| Notification | RabbitMQ | Event | Notifications |
 
 ### Gateway Service (4000)
-- HTTP REST API для клиентов
-- Маршрутизация к микросервисам через gRPC
-- Swagger документация
-- JWT аутентификация
+- HTTP REST API for clients
+- Routing to microservices via gRPC
+- Swagger documentation
+- JWT authentication
 - Rate limiting
 
 ### Auth Service (50051)
-- OTP верификация
-- JWT токены
-- Управление сессиями
-- PostgreSQL БД
+- OTP verification
+- JWT tokens
+- Session management
+- PostgreSQL database
 
 ### Users Service (50052)
-- Профили пользователей
-- Обновление данных
-- Загрузка аватара
-- PostgreSQL БД
+- User profiles
+- Data updates
+- Avatar upload
+- PostgreSQL database
 
 ### Payment Service (50059)
-- Интеграция со Stripe
-- Управление способами оплаты
-- Обработка платежей
-- PostgreSQL БД
+- Stripe integration
+- Payment method management
+- Payment processing
+- PostgreSQL database
 
 ### Screening Service (50057)
-- Создание показов
-- Управление расписанием
-- Фильтрация по фильму/дате
-- MongoDB БД
+- Screening creation
+- Schedule management
+- Filtering by movie/date
+- MongoDB database
 
 ### Booking Service (50058)
-- Бронирование мест
-- Управление статусом заказа
-- QR коды для билетов
-- PostgreSQL БД
+- Seat booking
+- Order status management
+- QR codes for tickets
+- PostgreSQL database
 
 ### Movie Service (50054)
-- Каталог фильмов
-- Категории и жанры
-- Фильтрация и поиск
-- PostgreSQL БД
+- Movie catalog
+- Categories and genres
+- Search and filtering
+- PostgreSQL database
 
 ### Theater Service (50055)
-- Управление кинотеатрами
-- Информация о залах
-- PostgreSQL БД
+- Theater management
+- Hall information
+- PostgreSQL database
 
 ### Hall Service (50056)
-- Конфигурация залов
-- Управление местами
-- PostgreSQL БД
+- Hall configuration
+- Seat management
+- PostgreSQL database
 
 ### Media Service (50053)
-- Загрузка изображений/видео
-- Обработка медиа
-- S3-совместимое хранилище
+- Image/video upload
+- Media processing
+- S3-compatible storage
 
 ### Notification Service
-- Прослушивание RabbitMQ событий
-- Email/SMS уведомления
-- Логирование отправок
+- RabbitMQ event listening
+- Email/SMS notifications
+- Send logging
 
 ---
 
-## 📦 Предварительные требования
+## 📦 Prerequisites
 
 - Node.js >= 18.x
-- npm >= 9.x или yarn >= 3.x
+- npm >= 9.x or yarn >= 3.x
 - Docker >= 20.x
 - Docker Compose >= 2.x
-- PostgreSQL >= 14.x (в Docker)
-- MongoDB >= 6.x (в Docker)
-- RabbitMQ >= 3.12 (в Docker)
+- PostgreSQL >= 14.x (in Docker)
+- MongoDB >= 6.x (in Docker)
+- RabbitMQ >= 3.12 (in Docker)
 
 ---
 
-## 🚀 Установка и запуск
+## 🚀 Installation and Setup
 
-### 1. Клонирование репозитория
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/lampovayatyan999/mirocinema-backend.git
 cd mirocinema-backend
 ```
 
-### 2. Установка зависимостей
+### 2. Install Dependencies
 
 ```bash
 yarn install
 ```
 
-### 3. Запуск инфраструктуры
+### 3. Start Infrastructure
 
 ```bash
 cd docker
 docker-compose up -d
 ```
 
-Проверка:
+Verify:
 ```bash
 docker-compose ps
 ```
 
-### 4. Конфигурация окружения
+### 4. Environment Configuration
 
-Скопировать `.env.example` в `.env` и заполнить значения для каждого сервиса.
+Copy `.env.example` to `.env` and fill in values for each service.
 
-### 5. Запуск всех сервисов
+### 5. Start All Services
 
 ```bash
 yarn workspaces foreach -i run start:dev
 ```
 
-Или отдельные сервисы:
+Or individual services:
 
 ```bash
 cd gateway-service && npm run start:dev
 cd auth-service && npm run start:dev
-# и т.д.
+# etc.
 ```
 
-### 6. Проверка
+### 6. Verification
 
 ```bash
 # Gateway Swagger
@@ -247,7 +246,7 @@ http://localhost:3100
 
 ---
 
-## 📁 Структура проекта
+## 📁 Project Structure
 
 ```
 mirocinema-backend/
@@ -274,7 +273,7 @@ mirocinema-backend/
 
 ---
 
-## ⚙️ Конфигурация окружения
+## ⚙️ Environment Configuration
 
 ### .env.example
 
@@ -371,11 +370,11 @@ JWT_SECRET=your-secret-key
 JWT_EXPIRATION=3600
 ```
 
-### Остальные сервисы - аналогично
+### Other Services - Similar Configuration
 
 ---
 
-## 📚 API Документация
+## 📚 API Documentation
 
 ### Swagger
 
@@ -386,67 +385,67 @@ http://localhost:4000/docs
 ### Authentication Endpoints
 
 ```
-POST   /auth/otp/send              - Отправить OTP
-POST   /auth/otp/verify            - Верифицировать OTP
-POST   /auth/refresh               - Обновить токен
-POST   /auth/logout                - Выход
-GET    /auth/account               - Данные аккаунта
+POST   /auth/otp/send              - Send OTP
+POST   /auth/otp/verify            - Verify OTP
+POST   /auth/refresh               - Refresh token
+POST   /auth/logout                - Logout
+GET    /auth/account               - Account data
 ```
 
 ### Users Endpoints
 
 ```
-GET    /users/@me                  - Текущий пользователь
-PATCH  /users/@me                  - Обновить профиль
-PATCH  /users/@me/avatar           - Загрузить аватар
+GET    /users/@me                  - Current user
+PATCH  /users/@me                  - Update profile
+PATCH  /users/@me/avatar           - Upload avatar
 ```
 
 ### Movies Endpoints
 
 ```
-GET    /movies/movies              - Список фильмов
-GET    /movies/:slug               - Информация о фильме
-GET    /categories                 - Категории
+GET    /movies/movies              - Movie list
+GET    /movies/:slug               - Movie info
+GET    /categories                 - Categories
 ```
 
 ### Theaters Endpoints
 
 ```
-GET    /theaters/theaters           - Список кинотеатров
-POST   /theaters                    - Создать (admin)
+GET    /theaters/theaters           - Theater list
+POST   /theaters                    - Create (admin)
 ```
 
 ### Screenings Endpoints
 
 ```
-GET    /screenings                 - Все показы
-GET    /screenings/:id             - Показ по ID
-GET    /screenings/movie/:id       - Показы по фильму
-POST   /screenings                 - Создать (admin)
+GET    /screenings                 - All screenings
+GET    /screenings/:id             - Screening by ID
+GET    /screenings/movie/:id       - Screenings by movie
+POST   /screenings                 - Create (admin)
 ```
 
 ### Bookings Endpoints
 
 ```
-GET    /bookings                   - Бронирования пользователя
-POST   /bookings                   - Создать бронирование
+GET    /bookings                   - User bookings
+POST   /bookings                   - Create booking
 ```
 
 ### Payments Endpoints
 
 ```
-POST   /payment/init               - Инициализировать платёж
-GET    /payment/methods            - Способы оплаты
-POST   /payment/methods            - Добавить способ
-POST   /payment/methods/verify     - Верифицировать
-DELETE /payment/methods/:id        - Удалить способ
+POST   /payment/init               - Initialize payment
+GET    /payment/methods            - Payment methods
+POST   /payment/methods            - Add method
+POST   /payment/methods/verify     - Verify method
+DELETE /payment/methods/:id        - Delete method
 ```
 
 ---
 
-## 👨‍💻 Разработка
+## 👨‍💻 Development
 
-### Структура сервиса
+### Service Structure
 
 ```
 service-name/
@@ -464,45 +463,45 @@ service-name/
 │   ├── app.module.ts
 │   └── main.ts
 ├── test/
-├── prisma/ (если используется)
+├── prisma/ (if used)
 ├── package.json
 └── tsconfig.json
 ```
 
-### Команды разработки
+### Development Commands
 
 ```bash
-# Все сервисы
+# All services
 yarn workspaces foreach -i run start:dev
 yarn workspaces foreach run lint
 yarn workspaces foreach run format
 yarn workspaces foreach run test
 yarn workspaces foreach run build
 
-# Конкретный сервис
+# Single service
 cd auth-service
 npm run start:dev                   # Development
 npm run build                       # Production build
-npm run test                        # Unit тесты
-npm run test:e2e                   # E2E тесты
+npm run test                        # Unit tests
+npm run test:e2e                   # E2E tests
 npm run lint                        # ESLint
 npm run format                      # Prettier
 ```
 
-### Миграции БД
+### Database Migrations
 
 ```bash
-# Prisma сервисы
+# Prisma services
 cd auth-service
 npx prisma migrate dev --name name
 npx prisma migrate deploy
 npx prisma studio
 
-# Drizzle сервисы
+# Drizzle services
 npm run db:migrate
 ```
 
-### Создание нового сервиса
+### Creating New Service
 
 ```bash
 mkdir new-service
@@ -521,19 +520,19 @@ touch src/main.ts src/app.module.ts
 
 ---
 
-## 🧪 Тестирование
+## 🧪 Testing
 
 ```bash
-# Unit тесты
+# Unit tests
 npm run test
 
 # Watch mode
 npm run test:watch
 
-# E2E тесты
+# E2E tests
 npm run test:e2e
 
-# Покрытие
+# Coverage
 npm run test:cov
 ```
 
@@ -541,35 +540,35 @@ npm run test:cov
 
 ## 🐳 Docker & Deployment
 
-### Сборка Docker образов
+### Build Docker Images
 
 ```bash
 docker build -f gateway-service/Dockerfile -t mirocinema-gateway:latest .
 docker build -f auth-service/Dockerfile -t mirocinema-auth:latest .
-# и т.д.
+# etc.
 ```
 
-### Запуск Docker Compose
+### Run Docker Compose
 
 ```bash
 cd docker
 docker-compose up -d
 docker-compose ps
 docker-compose logs -f
-docker-compose down -v  # Удалить всё включая volumes
+docker-compose down -v  # Remove everything including volumes
 ```
 
-### Production Deploy
+### Production Deployment
 
-Используется CI/CD pipeline (GitHub Actions):
-1. Запуск тестов
-2. Сборка Docker образов
-3. Push на Docker Registry
-4. Развёртывание на Kubernetes
+Uses CI/CD pipeline (GitHub Actions):
+1. Run tests
+2. Build Docker images
+3. Push to Docker Registry
+4. Deploy to Kubernetes
 
 ---
 
-## 📊 Мониторинг
+## 📊 Monitoring
 
 ### Prometheus
 
@@ -577,11 +576,11 @@ docker-compose down -v  # Удалить всё включая volumes
 http://localhost:9090
 ```
 
-Метрики:
-- HTTP запросы и ответы
-- gRPC вызовы
-- Database запросы
-- Memory и CPU
+Metrics:
+- HTTP requests and responses
+- gRPC calls
+- Database queries
+- Memory and CPU
 
 ### Loki
 
@@ -589,7 +588,7 @@ http://localhost:9090
 http://localhost:3100
 ```
 
-Поиск логов по tags и фильтрация.
+Search logs by tags and filtering.
 
 ### Grafana
 
@@ -599,7 +598,7 @@ User: admin
 Password: admin
 ```
 
-Визуализация метрик из Prometheus и Loki.
+Visualize metrics from Prometheus and Loki.
 
 ### Jaeger
 
@@ -607,7 +606,7 @@ Password: admin
 http://localhost:16686
 ```
 
-Распределённая трассировка запросов.
+Distributed tracing of requests.
 
 ### RabbitMQ Management
 
@@ -619,47 +618,47 @@ Password: password123
 
 ---
 
-## 📝 Соглашения о кодировании
+## 📝 Code Conventions
 
-### Наименование
+### Naming
 
 ```typescript
-// Классы - PascalCase
+// Classes - PascalCase
 class UserService {}
 
-// Функции - camelCase
+// Functions - camelCase
 const getUserData = () => {}
 
-// Константы - UPPER_SNAKE_CASE
+// Constants - UPPER_SNAKE_CASE
 const MAX_RETRY_ATTEMPTS = 3;
 
-// Файлы - kebab-case
+// Files - kebab-case
 user.service.ts
 user.controller.ts
 user.module.ts
 ```
 
-### Структура файла
+### File Structure
 
 ```typescript
-// 1. Импорты
+// 1. Imports
 import { Injectable } from '@nestjs/common';
 
-// 2. Декораторы
+// 2. Decorators
 @Injectable()
 export class UserService {
   // 3. Constructor
   constructor(private repository: Repository<User>) {}
 
-  // 4. Public методы
+  // 4. Public methods
   public async getUser(id: string) {}
 
-  // 5. Private методы
+  // 5. Private methods
   private validateUser(user: User) {}
 }
 ```
 
-### Обработка ошибок
+### Error Handling
 
 ```typescript
 import { HttpException, HttpStatus } from '@nestjs/common';
@@ -672,14 +671,13 @@ throw new NotFoundException('User not found');
 
 ## 🤝 Contributing
 
-1. Создайте feature branch: `git checkout -b feature/amazing-feature`
-2. Commit: `git commit -m 'feat: описание'`
+1. Create feature branch: `git checkout -b feature/amazing-feature`
+2. Commit: `git commit -m 'feat: description'`
 3. Push: `git push origin feature/amazing-feature`
-4. Откройте Pull Request
+4. Open Pull Request
 
 ---
 
-**Последнее обновление:** Июнь 2026
-**Статус:** Production Ready
-
+**Last Update:** June 2026
+**Status:** Production Ready
 - **GitHub:** https://github.com/lampovayatyan999
