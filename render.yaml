@@ -92,13 +92,18 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
 
   - type: web
     name: auth-service
@@ -122,9 +127,13 @@ services:
       - key: DATABASE_PASSWORD
         value: mirocinemapassword
       - key: DATABASE_HOST
-        value: localhost
+        fromDatabase:
+          name: mirocinema-postgres
+          property: host
       - key: DATABASE_PORT
-        value: 5432
+        fromDatabase:
+          name: mirocinema-postgres
+          property: port
       - key: DATABASE_NAME
         value: mirocinema
       - key: PASSPORT_SECRET_KEY
@@ -142,13 +151,18 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
 
   - type: web
     name: users-service
@@ -172,9 +186,13 @@ services:
       - key: DATABASE_PASSWORD
         value: mirocinemapassword
       - key: DATABASE_HOST
-        value: localhost
+        fromDatabase:
+          name: mirocinema-postgres
+          property: host
       - key: DATABASE_PORT
-        value: 5432
+        fromDatabase:
+          name: mirocinema-postgres
+          property: port
       - key: DATABASE_NAME
         value: mirocinema
       - key: REDIS_USER
@@ -182,13 +200,18 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
 
   - type: web
     name: movie-service
@@ -212,9 +235,13 @@ services:
       - key: DATABASE_PASSWORD
         value: mirocinemapassword
       - key: DATABASE_HOST
-        value: localhost
+        fromDatabase:
+          name: mirocinema-postgres
+          property: host
       - key: DATABASE_PORT
-        value: 5432
+        fromDatabase:
+          name: mirocinema-postgres
+          property: port
       - key: DATABASE_NAME
         value: mirocinema
       - key: REDIS_USER
@@ -222,13 +249,18 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
 
   - type: web
     name: theater-service
@@ -252,9 +284,13 @@ services:
       - key: DATABASE_PASSWORD
         value: mirocinemapassword
       - key: DATABASE_HOST
-        value: localhost
+        fromDatabase:
+          name: mirocinema-postgres
+          property: host
       - key: DATABASE_PORT
-        value: 5432
+        fromDatabase:
+          name: mirocinema-postgres
+          property: port
       - key: DATABASE_NAME
         value: mirocinema
       - key: REDIS_USER
@@ -262,13 +298,18 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
 
   - type: web
     name: screening-service
@@ -292,9 +333,13 @@ services:
       - key: DATABASE_PASSWORD
         value: mirocinemapassword
       - key: DATABASE_HOST
-        value: localhost
+        fromDatabase:
+          name: mirocinema-postgres
+          property: host
       - key: DATABASE_PORT
-        value: 5432
+        fromDatabase:
+          name: mirocinema-postgres
+          property: port
       - key: DATABASE_NAME
         value: mirocinema
       - key: REDIS_USER
@@ -302,13 +347,18 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
 
   - type: web
     name: booking-service
@@ -332,9 +382,13 @@ services:
       - key: DATABASE_PASSWORD
         value: mirocinemapassword
       - key: DATABASE_HOST
-        value: localhost
+        fromDatabase:
+          name: mirocinema-postgres
+          property: host
       - key: DATABASE_PORT
-        value: 5432
+        fromDatabase:
+          name: mirocinema-postgres
+          property: port
       - key: DATABASE_NAME
         value: mirocinema
       - key: REDIS_USER
@@ -342,13 +396,18 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
 
   - type: web
     name: payment-service
@@ -372,9 +431,13 @@ services:
       - key: DATABASE_PASSWORD
         value: mirocinemapassword
       - key: DATABASE_HOST
-        value: localhost
+        fromDatabase:
+          name: mirocinema-postgres
+          property: host
       - key: DATABASE_PORT
-        value: 5432
+        fromDatabase:
+          name: mirocinema-postgres
+          property: port
       - key: DATABASE_NAME
         value: mirocinema
       - key: STRIPE_SECRET_KEY
@@ -384,13 +447,18 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
 
   - type: web
     name: media-service
@@ -410,13 +478,18 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
 
   - type: web
     name: notification-service
@@ -436,13 +509,43 @@ services:
       - key: REDIS_PASSWORD
         value: redispasswordplaceholder
       - key: REDIS_HOST
-        value: localhost
+        fromService:
+          name: mirocinema-redis
+          type: web
+          property: host
       - key: REDIS_PORT
         value: 6379
       - key: REDIS_DB
         value: 0
       - key: RMQ_URL
         value: amqp://localhost
+      - key: MONGODB_URL
+        value: mongodb://mirocinema:mongopassword123@mirocinema-mongodb:27017/mirocinema?authSource=admin
+
+  # Контейнер Redis
+  - type: web
+    name: mirocinema-redis
+    runtime: docker
+    plan: free
+    
+    envVars:
+      - key: PORT
+        value: 6379
+
+  # Контейнер MongoDB
+  - type: web
+    name: mirocinema-mongodb
+    runtime: docker
+    plan: free
+    envVars:
+      - key: PORT
+        value: 27017
+      - key: MONGO_INITDB_ROOT_USERNAME
+        value: mirocinema
+      - key: MONGO_INITDB_ROOT_PASSWORD
+        value: mongopassword123
+      - key: MONGO_INITDB_DATABASE
+        value: mirocinema
 
 databases:
   - name: mirocinema-postgres
